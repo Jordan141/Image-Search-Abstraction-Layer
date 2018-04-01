@@ -10,6 +10,8 @@ const storeURL = require('path').resolve('./data/searches.json')
 let SEARCH_STORE = JSON.parse(fs.readFileSync(storeURL))
 const app = express()
 
+app.use(express.static(__dirname + '/public'))
+
 const filterImages = e => makeImageObject(e.previewURL, e.webformatURL, e.tags, e.pageURL)
 const makeImageObject = (thumbnailUrl, webUrl, alt, pictureLocation) => {return new Object({thumbnailUrl, webUrl, alt, pictureLocation})}//I know I can use {{}} but I get weird bugs when I do, so it's staying like this
 
@@ -43,7 +45,7 @@ const paginate = (cachedData, offset) => {
 }
     
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('index.html')
 })
 app.get('/api/:query/:offset', (req,res) => {
     const {query, offset} = req.params
